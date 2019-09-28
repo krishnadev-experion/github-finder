@@ -1,18 +1,34 @@
-<p style="margin-top: 20px">Github username</p>
-<input class="form-control form-control-lg col-12" [(ngModel)]="searchUser" type="text" placeholder="Github username">
-<button type="button" (click)="getUser()" class="btn btn-primary">Find me</button>
-<div *ngIf="user.name; else elseBlock" class="col-12" style="margin-top: 10px">
-    <div class="card text-center">
-        <div class="card-header" style="background-color: #007bff">
-            <h3>{{user.name}}</h3>
-            <p>{{user.location}}</p>
-        </div>
-        <div class="card-body">
-            <img [src]="user.avatar_url">
-        </div>
-        <div class="card-footer" style="background-color:#007bff">
-            <p>{{user.bio}}</p>
-            <a [href]="user.url">{{user.name}}</a>
-        </div>
+<input class="form-control form-control-lg col-12" [(ngModel)]="searchUser" type="text" placeholder="Github username"
+    style="margin-top: 50px">
+<button (click)="getUser()" class="btn btn-primary" style="margin-top: 20px;">Find me</button>
+<div *ngIf="isLoad; else displayBlock" class="d-flex justify-content-center">
+    <div class="spinner-grow text-primary" role="status" style="width: 6rem; height: 6rem; margin-top: 20px">
+        <span class="sr-only">Loading...</span>
     </div>
 </div>
+<ng-template #displayBlock>
+    <div *ngIf="hasUser && clicked; else noUserBlock" class="col-12" style="margin-top: 10px; padding: 0;">
+        <div class="card text-center" style="color: white;">
+            <div class="card-header" style="background-color: #007bff;">
+                <h3>{{user.name}}</h3>
+                <p>{{user.location}}</p>
+            </div>
+            <div class="card-body">
+                <img [src]="user.avatar_url">
+            </div>
+            <div class="card-footer" style="background-color:#007bff">
+                <p>{{user.bio}}</p>
+                <a [href]="user.html_url" target="_blank" style="color: white; font-size: 20px; text-decoration: underline">
+                    {{user.name}}</a>
+            </div>
+        </div>
+    </div>
+    <ng-template #noUserBlock>
+        <div *ngIf="clicked && !hasUser" class="card text-center" style="background-color: #007bff;
+        color: white; margin-top: 20px;">
+            <div class="card-body">
+                <h4>Username doesn't exist!</h4>
+            </div>
+        </div>
+    </ng-template>
+</ng-template>

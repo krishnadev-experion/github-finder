@@ -9,6 +9,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FinderComponent implements OnInit {
   searchUser = '';
+  isLoad = false;
+  clicked = false;
+  hasUser = true;
   user = {
 
   };
@@ -17,13 +20,20 @@ export class FinderComponent implements OnInit {
   ngOnInit() {
   }
   getUser() {
+    this.isLoad = true;
     return this.httpClient.get(`https://api.github.com/users/${this.searchUser}?access_token=b39870d5dd43d528238ecb71187dcc0371823b9c`)
     .subscribe((res) => {
       this.user = res;
-      console.log(this.user); // because asynchronous
+      this.clicked = true;
+      this.isLoad = false;
+      this.hasUser = true;
+      console.log(this.user);
     },
       err => {
-        this.toaster.error('User not found');
+        this.toaster.error('User not found!');
+        this.hasUser = false;
+        this.isLoad = false;
+        this.clicked = true;
       }
     );
   }
