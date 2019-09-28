@@ -1,0 +1,18 @@
+<p style="margin-top: 20px">Github username</p>
+<input class="form-control form-control-lg col-12" [(ngModel)]="searchUser" type="text" placeholder="Github username">
+<button type="button" (click)="getUser()" class="btn btn-primary">Find me</button>
+<div *ngIf="user.name; else elseBlock" class="col-12" style="margin-top: 10px">
+    <div class="card text-center">
+        <div class="card-header" style="background-color: #007bff">
+            <h3>{{user.name}}</h3>
+            <p>{{user.location}}</p>
+        </div>
+        <div class="card-body">
+            <img [src]="user.avatar_url">
+        </div>
+        <div class="card-footer" style="background-color:#007bff">
+            <p>{{user.bio}}</p>
+            <a [href]="user.url">{{user.name}}</a>
+        </div>
+    </div>
+</div>
